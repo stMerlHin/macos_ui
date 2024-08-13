@@ -1,3 +1,7 @@
+## [2.0.8]
+### 🛠️ Updated 🛠️
+* Fixed `SidebarItem` text overflowing.
+
 ## [2.0.7]
 ### 🛠️ Updated 🛠️
 * Made most widgets aware of the user’s accent color and window state by adding respective fields to `MacosThemeData`.

@@ -318,11 +318,14 @@ class _SidebarItem extends StatelessWidget {
                       child: item.leading!,
                     ),
                   ),
-                DefaultTextStyle(
-                  style: labelStyle.copyWith(
-                    color: selected ? textLuminance(selectedColor) : null,
+                Expanded(
+                  child: DefaultTextStyle(
+                    style: labelStyle.copyWith(
+                      color: selected ? textLuminance(selectedColor) : null,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    child: item.label,
                   ),
-                  child: item.label,
                 ),
                 if (hasTrailing) ...[
                   const Spacer(),
