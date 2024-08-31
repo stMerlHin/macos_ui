@@ -1,3 +1,7 @@
+## [2.0.9]
+### 🛠️ Updated 🛠️
+* Add `expandDisclosureItems` flag to `SidebarItem` to optionally (default not changed) expand disclosure items initially
+
 ## [2.0.8]
 ### 🛠️ Updated 🛠️
 * Fixed `SidebarItem` text overflowing.

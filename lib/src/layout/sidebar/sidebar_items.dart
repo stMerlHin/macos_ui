@@ -378,8 +378,7 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
   late AnimationController _controller;
   late Animation<double> _iconTurns;
   late Animation<double> _heightFactor;
-
-  bool _isExpanded = false;
+  late bool _isExpanded;
 
   bool get hasLeading => widget.item.leading != null;
 
@@ -389,6 +388,11 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
     _controller = AnimationController(duration: _kExpand, vsync: this);
     _heightFactor = _controller.drive(_easeInTween);
     _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
+
+    _isExpanded = widget.item.expandDisclosureItems;
+    if (_isExpanded) {
+      _controller.forward();
+    }
   }
 
   void _handleTap() {
