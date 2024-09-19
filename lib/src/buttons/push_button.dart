@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/enums/accent_color.dart';
 import 'package:macos_ui/src/library.dart';
 
 const _kMiniButtonSize = Size(26.0, 11.0);
