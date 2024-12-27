@@ -1,3 +1,7 @@
+## [2.0.10]
+### 🛠️ Updated 🛠️
+* Add Older macOS versions” section to README
+
 ## [2.0.9]
 ### 🛠️ Updated 🛠️
 * Add `expandDisclosureItems` flag to `SidebarItem` to optionally (default not changed) expand disclosure items initially
