@@ -1,3 +1,7 @@
+## [2.1.2]
+### 🛠️ Updated 🛠️
+* Add Older macOS versions” section to README
+
 ## [2.1.1]
 * Fixed a bug where `MacosPulldownMenuItem` would not show an alert dialog when tapped.
 
