@@ -1,3 +1,7 @@
+## [2.1.3]
+### 🛠️ Fixed 🛠️
+* Fix `ToolbarOverflowButton` only reacting to every second click.
+
 ## [2.1.2]
 ### 🛠️ Updated 🛠️
 * Add “Older macOS versions” section to README
