@@ -1,3 +1,7 @@
+## [2.1.4]
+### 🛠️ Fixed 🛠️
+* Fix incorrect barrier color when calling `showMacosAlertDialog` when dark mode is enabled.
+
 ## [2.1.3]
 ### 🛠️ Fixed 🛠️
 * Fix `ToolbarOverflowButton` only reacting to every second click.

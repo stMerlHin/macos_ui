@@ -256,7 +256,10 @@ Future<T?> showMacosAlertDialog<T>({
   barrierColor ??= MacosDynamicColor.resolve(
     MacosColors.controlBackgroundColor,
     context,
-  ).withOpacity(0.6);
+  );
+
+  barrierColor = Color.fromRGBO((barrierColor.r * 255).floor(),
+      (barrierColor.g * 255).floor(), (barrierColor.b * 255).floor(), 0.6);
 
   return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
     _MacosAlertDialogRoute<T>(
