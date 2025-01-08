@@ -1,3 +1,7 @@
+## [2.1.5]
+### 🛻 Migrated 🛻
+* Migrate to Flutter’s new Color API.
+
 ## [2.1.4]
 ### 🛠️ Fixed 🛠️
 * Fix incorrect barrier color when calling `showMacosAlertDialog` when dark mode is enabled.
