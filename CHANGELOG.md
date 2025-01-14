@@ -1,3 +1,8 @@
+## [2.1.6]
+### 🔄 Updated 🔄
+* add `section` parameter to `SidebarItem` to display an unclickable widget in the sidebar as a section header (thanks, [@whirlun](https://github.com/whirlun)).
+* Fix incorrect barrier color when calling `showMacosSheet` when dark mode is enabled.
+
 ## [2.1.5]
 ### 🛻 Migrated 🛻
 * Migrate to Flutter’s new Color API.
