@@ -1,3 +1,7 @@
+## [2.1.7]
+### 🔄 Updated 🔄
+* Expose `WindowMainStateListener` and implement `overrideIsMainWindow` method to allow for the window’s main state to be overridden.
+
 ## [2.1.6]
 ### 🔄 Updated 🔄
 * add `section` parameter to `SidebarItem` to display an unclickable widget in the sidebar as a section header (thanks, [@whirlun](https://github.com/whirlun)).
