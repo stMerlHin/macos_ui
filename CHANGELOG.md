@@ -1,3 +1,7 @@
+## [2.1.8]
+### 🛠️ Fixed 🛠️
+* Fixed `shownByDefault` not being respected for the left sidebar of the `MacosWindow` (thanks, [@ShayperCool](https://github.com/ShayperCool)).
+
 ## [2.1.7]
 ### 🔄 Updated 🔄
 * Expose `WindowMainStateListener` and implement `overrideIsMainWindow` method to allow for the window’s main state to be overridden.
@@ -28,7 +32,6 @@
   * pubspec.yaml allows Flutter SDK version 1.9.x, which does not support the flutter.plugin.platforms key.
     Please consider increasing the Flutter SDK requirement to ^1.10.0 (environment.sdk.flutter)
   ```
-
 ## [2.1.1]
 * Fixed a bug where `MacosPulldownMenuItem` would not show an alert dialog when tapped.
 
