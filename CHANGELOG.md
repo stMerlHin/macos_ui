@@ -1,3 +1,8 @@
+## [2.1.9]
+### 🛠️ Fixed 🛠️
+* Fix incorrect highlighting and focusing behavior of `_MacosPopupMenuItemButton`.
+* Remove scrolling animation from dropdown menus when manipulating the focus with the keyboard to mimic native macOS behavior.
+
 ## [2.1.8]
 ### 🛠️ Fixed 🛠️
 * Fixed `shownByDefault` not being respected for the left sidebar of the `MacosWindow` (thanks, [@ShayperCool](https://github.com/ShayperCool)).
