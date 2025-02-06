@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:example/pages/buttons_page.dart';
 import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
@@ -9,9 +11,12 @@ import 'package:example/pages/sliver_toolbar_page.dart';
 import 'package:example/pages/tabview_page.dart';
 import 'package:example/pages/toolbar_page.dart';
 import 'package:example/pages/typography_page.dart';
+import 'package:example/platform_menus.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'theme.dart';
 
@@ -22,7 +27,11 @@ Future<void> _configureMacosWindowUtils() async {
 }
 
 Future<void> main() async {
-  await _configureMacosWindowUtils();
+  if (!kIsWeb) {
+    if (Platform.isMacOS) {
+      await _configureMacosWindowUtils();
+    }
+  }
 
   runApp(const MacosUIGalleryApp());
 }
@@ -38,8 +47,6 @@ class MacosUIGalleryApp extends StatelessWidget {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
           title: 'macos_ui Widget Gallery',
-          theme: MacosThemeData.light(),
-          darkTheme: MacosThemeData.dark(),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
           home: const WidgetGallery(),
@@ -61,55 +68,10 @@ class _WidgetGalleryState extends State<WidgetGallery> {
 
   late final searchFieldController = TextEditingController();
 
-  final List<Widget Function(bool)> pageBuilders = [
-    (_) => CupertinoTabView(builder: (_) => const ButtonsPage()),
-    (_) => const IndicatorsPage(),
-    (_) => const FieldsPage(),
-    (_) => const ColorsPage(),
-    (_) => const DialogsPage(),
-    (_) => const ToolbarPage(),
-    (isVisible) => SliverToolbarPage(isVisible: isVisible),
-    (_) => const TabViewPage(),
-    (_) => const ResizablePanePage(),
-    (_) => const SelectorsPage(),
-    (_) => const TypographyPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return PlatformMenuBar(
-      menus: const [
-        PlatformMenu(
-          label: 'macos_ui Widget Gallery',
-          menus: [
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.about,
-            ),
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.quit,
-            ),
-          ],
-        ),
-        PlatformMenu(
-          label: 'View',
-          menus: [
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.toggleFullScreen,
-            ),
-          ],
-        ),
-        PlatformMenu(
-          label: 'Window',
-          menus: [
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.minimizeWindow,
-            ),
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.zoomWindow,
-            ),
-          ],
-        ),
-      ],
+      menus: menuBarItems(),
       child: MacosWindow(
         sidebar: Sidebar(
           top: MacosSearchField(
@@ -184,41 +146,60 @@ class _WidgetGalleryState extends State<WidgetGallery> {
           builder: (context, scrollController) {
             return SidebarItems(
               currentIndex: pageIndex,
-              onChanged: (i) => setState(() => pageIndex = i),
+              onChanged: (i) {
+                if (kIsWeb && i == 10) {
+                  launchUrl(
+                    Uri.parse(
+                      'https://www.figma.com/file/IX6ph2VWrJiRoMTI1Byz0K/Apple-Design-Resources---macOS-(Community)?node-id=0%3A1745&mode=dev',
+                    ),
+                  );
+                } else {
+                  setState(() => pageIndex = i);
+                }
+              },
               scrollController: scrollController,
               itemSize: SidebarItemSize.large,
               items: const [
                 SidebarItem(
-                  leading: MacosImageIcon(
-                    AssetImage('assets/sf_symbols/button_programmable_2x.png'),
-                  ),
-                  label: Text('Buttons'),
-                ),
-                SidebarItem(
-                  leading: MacosImageIcon(
-                    AssetImage(
-                      'assets/sf_symbols/lines_measurement_horizontal_2x.png',
+                  label: Text('Basic UI Elements'),
+                  section: true,
+                  expandDisclosureItems: true,
+                  disclosureItems: [
+                    SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                            'assets/sf_symbols/button_programmable_2x.png'),
+                      ),
+                      label: Text('Buttons'),
                     ),
-                  ),
-                  label: Text('Indicators'),
-                ),
-                SidebarItem(
-                  leading: MacosImageIcon(
-                    AssetImage(
-                      'assets/sf_symbols/character_cursor_ibeam_2x.png',
+                    SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                          'assets/sf_symbols/lines_measurement_horizontal_2x.png',
+                        ),
+                      ),
+                      label: Text('Indicators'),
                     ),
-                  ),
-                  label: Text('Fields'),
-                ),
-                SidebarItem(
-                  leading: MacosImageIcon(
-                    AssetImage('assets/sf_symbols/rectangle_3_group_2x.png'),
-                  ),
-                  label: Text('Colors'),
-                ),
-                SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.square_on_square),
-                  label: Text('Dialogs & Sheets'),
+                    SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                          'assets/sf_symbols/character_cursor_ibeam_2x.png',
+                        ),
+                      ),
+                      label: Text('Fields'),
+                    ),
+                    SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                            'assets/sf_symbols/rectangle_3_group_2x.png'),
+                      ),
+                      label: Text('Colors'),
+                    ),
+                    SidebarItem(
+                      leading: MacosIcon(CupertinoIcons.square_on_square),
+                      label: Text('Dialogs & Sheets'),
+                    ),
+                  ],
                 ),
                 SidebarItem(
                   leading: MacosImageIcon(
@@ -227,6 +208,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                     ),
                   ),
                   label: Text('Layout'),
+                  section: true,
                   disclosureItems: [
                     SidebarItem(
                       leading: MacosIcon(CupertinoIcons.macwindow),
@@ -249,17 +231,25 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                       label: Text('ResizablePane'),
                     ),
                   ],
+                  expandDisclosureItems: true,
                 ),
                 SidebarItem(
-                  leading: MacosImageIcon(
-                    AssetImage(
-                        'assets/sf_symbols/filemenu_and_selection_2x.png'),
-                  ),
-                  label: Text('Selectors'),
-                ),
-                SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.textformat_size),
-                  label: Text('Typography'),
+                  label: Text('Additional UI Elements'),
+                  section: true,
+                  expandDisclosureItems: true,
+                  disclosureItems: [
+                    SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                            'assets/sf_symbols/filemenu_and_selection_2x.png'),
+                      ),
+                      label: Text('Selectors'),
+                    ),
+                    SidebarItem(
+                      leading: MacosIcon(CupertinoIcons.textformat_size),
+                      label: Text('Typography'),
+                    ),
+                  ],
                 ),
               ],
             );
@@ -281,17 +271,19 @@ class _WidgetGalleryState extends State<WidgetGallery> {
             );
           },
         ),
-        child: IndexedStack(
-          index: pageIndex,
-          children: pageBuilders
-              .asMap()
-              .map((index, builder) {
-                final widget = builder(index == pageIndex);
-                return MapEntry(index, widget);
-              })
-              .values
-              .toList(),
-        ),
+        child: [
+          CupertinoTabView(builder: (_) => const ButtonsPage()),
+          const IndicatorsPage(),
+          const FieldsPage(),
+          const ColorsPage(),
+          const DialogsPage(),
+          const ToolbarPage(),
+          const SliverToolbarPage(isVisible: !kIsWeb),
+          const TabViewPage(),
+          const ResizablePanePage(),
+          const SelectorsPage(),
+          const TypographyPage(),
+        ][pageIndex],
       ),
     );
   }

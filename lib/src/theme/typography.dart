@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/src/theme/macos_colors.dart';
@@ -15,11 +16,11 @@ const _kDefaultFontFamily = '.AppleSystemUIFont';
 ///  * [MacosTheme], for aspects of a macos application that can be globally
 ///    adjusted, such as the primary color.
 ///  * <https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/typography/>
-class MacosTypography with Diagnosticable {
+class MacosTypography extends Equatable with Diagnosticable {
   /// Creates a typography that uses the given values.
   ///
-  /// Rather than creating a new typography, consider using [MacosTypography.black]
-  /// or [MacosTypography.white].
+  /// Rather than creating a new typography, consider using [MacosTypography.darkOpaque]
+  /// or [MacosTypography.lightOpaque].
   ///
   /// If you do decide to create your own typography, consider using one of
   /// those predefined themes as a starting point for [copyWith].
@@ -67,16 +68,9 @@ class MacosTypography with Diagnosticable {
     );
     headline ??= TextStyle(
       fontFamily: _kDefaultFontFamily,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w700,
       fontSize: 13,
       letterSpacing: -0.08,
-      color: color,
-    );
-    subheadline ??= TextStyle(
-      fontFamily: _kDefaultFontFamily,
-      fontWeight: FontWeight.w400,
-      fontSize: 11,
-      letterSpacing: 0.06,
       color: color,
     );
     body ??= TextStyle(
@@ -90,6 +84,13 @@ class MacosTypography with Diagnosticable {
       fontFamily: _kDefaultFontFamily,
       fontWeight: FontWeight.w400,
       fontSize: 12,
+      color: color,
+    );
+    subheadline ??= TextStyle(
+      fontFamily: _kDefaultFontFamily,
+      fontWeight: FontWeight.w400,
+      fontSize: 11,
+      letterSpacing: 0.06,
       color: color,
     );
     footnote ??= TextStyle(
@@ -108,7 +109,7 @@ class MacosTypography with Diagnosticable {
     );
     caption2 ??= TextStyle(
       fontFamily: _kDefaultFontFamily,
-      fontWeight: FontWeight.w400,
+      fontWeight: MacosFontWeight.w510,
       fontSize: 10,
       letterSpacing: 0.12,
       color: color,
@@ -142,9 +143,9 @@ class MacosTypography with Diagnosticable {
     required this.caption2,
   });
 
-  static final MacosTypography black =
+  factory MacosTypography.darkOpaque() =>
       MacosTypography(color: MacosColors.labelColor.color);
-  static final MacosTypography white =
+  factory MacosTypography.lightOpaque() =>
       MacosTypography(color: MacosColors.labelColor.darkColor);
 
   /// Style used for body text.
@@ -240,7 +241,7 @@ class MacosTypography with Diagnosticable {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    final defaultStyle = MacosTypography.black;
+    final defaultStyle = MacosTypography.darkOpaque();
     properties.add(DiagnosticsProperty<TextStyle>(
       'largeTitle',
       largeTitle,
@@ -297,6 +298,21 @@ class MacosTypography with Diagnosticable {
       defaultValue: defaultStyle.caption2,
     ));
   }
+
+  @override
+  List<Object?> get props => [
+        body,
+        callout,
+        caption1,
+        caption2,
+        footnote,
+        headline,
+        largeTitle,
+        subheadline,
+        title1,
+        title2,
+        title3,
+      ];
 }
 
 /// The thickness of the glyphs used to draw the text.
@@ -383,7 +399,7 @@ class MacosFontWeight implements FontWeight {
     w700,
     w800,
     w860,
-    w900
+    w900,
   ];
 
   /// Linearly interpolates between two font weights.
@@ -408,7 +424,10 @@ class MacosFontWeight implements FontWeight {
   /// Values for `t` are usually obtained from an [Animation<double>], such as
   /// an [AnimationController].
   static MacosFontWeight? lerp(
-      MacosFontWeight? a, MacosFontWeight? b, double t) {
+    MacosFontWeight? a,
+    MacosFontWeight? b,
+    double t,
+  ) {
     if (a == null && b == null) {
       return null;
     }
